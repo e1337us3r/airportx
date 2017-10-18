@@ -492,35 +492,62 @@ public class AirportXUI extends javax.swing.JFrame {
     }
 }    
    private boolean validateFlight(int flightId, String planeId, String carrier, String dest, String source, String depart, String arriv,int gate, String status){
-       if(!(flightId >= 10000 && flightId <= 99999 )){
+       if(!(flightId >= 10000 && flightId <= 99999)){
            //flightId must be unique
-           if (!(allFlights.stream().noneMatch((f) -> (f.getFlightId()==flightId)))) {
-               System.out.println("id match");
-               return false;
-           }
+           System.out.println("Flight id regex");
+           JOptionPane.showMessageDialog(null, "Please enter flightID accordingly(ex./ '100000')", "AirportX", JOptionPane.ERROR_MESSAGE);
            return false;
+       }
+       if (!(allFlights.stream().noneMatch((f) -> (f.getFlightId()==flightId)))) {
+               System.out.println("id match");
+               JOptionPane.showMessageDialog(null, "Matching flightID, please enter a unique ID.", "AirportX", JOptionPane.ERROR_MESSAGE);
+               return false;
        }
        //check planeID
        //TODO
-       //KEDAT MATCHES DEKI REGEX DUZGUN CALISMIYOR DUZELT
+       //SEDAT MATCHES DEKI REGEX DUZGUN CALISMIYOR DUZELT
        if("".equals(planeId) || !planeId.matches("([A-Z][A-Z])(-)+([0-9][0-9][0-9])")){
            System.out.println(planeId);
-           System.out.println("regex"); 
+           System.out.println("regex");
+           JOptionPane.showMessageDialog(null, "Please enter planeID accordingly(ex./ 'AA-955')", "AirportX", JOptionPane.ERROR_MESSAGE);
            return false;
        }
        
-           
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
+       if("".equals(carrier) || !carrier.matches("([A-Z][A-Z][A-Z])"))
+       {
+           System.out.println(carrier);
+           System.out.println("regex");
+           JOptionPane.showMessageDialog(null, "Please enter carrier accordingly(ex./ 'AAA')", "AirportX", JOptionPane.ERROR_MESSAGE);
+           return false;
+       }
+       if("".equals(dest) || !dest.matches("([A-Z][A-Z][A-Z])"))
+       {
+           System.out.println(carrier);
+           System.out.println("regex");
+           JOptionPane.showMessageDialog(null, "Please enter dest accordingly(ex./ 'AAA')", "AirportX", JOptionPane.ERROR_MESSAGE);
+           return false;
+       }
+       if("".equals(source) || !source.matches("([A-Z][A-Z][A-Z])"))
+       {
+           System.out.println(carrier);
+           System.out.println("regex");
+           JOptionPane.showMessageDialog(null, "Please enter source accordingly(ex./ 'AAA')", "AirportX", JOptionPane.ERROR_MESSAGE);
+           return false;
+       }
+       if("".equals(depart) || !depart.matches("([0-9][0-9])(:)+([0-9][0-9])"))
+       {
+           System.out.println(carrier);
+           System.out.println("regex");
+           JOptionPane.showMessageDialog(null, "Please enter departing time accordingly(ex./ '99:99')", "AirportX", JOptionPane.ERROR_MESSAGE);
+           return false;
+       }
+      if("".equals(arriv) || !arriv.matches("([0-9][0-9])(:)+([0-9][0-9])"))
+       {
+           System.out.println(carrier);
+           System.out.println("regex");
+           JOptionPane.showMessageDialog(null, "Please enter arriving time accordingly(ex./ '99:99')", "AirportX", JOptionPane.ERROR_MESSAGE);
+           return false;
+       }
         return true;
    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
