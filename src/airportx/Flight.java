@@ -5,6 +5,7 @@
  */
 package airportx;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -20,7 +21,7 @@ public class Flight {
     private String source;
     private String depart;
     private String arriv;
-    private String[] crew = new String[6];
+    private ArrayList<Person> onBoard;
     private int gate;
     private String status;
 
@@ -36,7 +37,7 @@ public class Flight {
         this.depart = depart;
     }
 
-    public Flight(int flightId, String planeId, String carrier, String dest, String source, String depart, String arriv, String crew [],int gate, String status) {
+    public Flight(int flightId, String planeId, String carrier, String dest, String source, String depart, String arriv, ArrayList<Person> onBoard,int gate, String status) {
         this.flightId = flightId;
         this.planeId = planeId;
         this.carrier = carrier;
@@ -44,7 +45,7 @@ public class Flight {
         this.source = source;
         this.depart = depart;
         this.arriv = arriv;
-        this.crew = crew;
+        this.onBoard = onBoard;
         this.gate = gate;
         this.status = status;
     }
@@ -73,8 +74,8 @@ public class Flight {
         return arriv;
     }
 
-    public String[] getCrew() {
-        return crew;
+    public ArrayList<Person> getOnBoard() {
+        return onBoard;
     }
 
     public int getGate() {
