@@ -11,15 +11,25 @@ package airportx;
  */
 public class Passenger extends Person{
 
-    
-    public Passenger(int id, String name, String surname, String from) {
+    private String ticketNo;
+    public Passenger(int id, String name, String surname, String from,String TicketNo) {
         super(id, name, surname, from);
+        this.ticketNo = TicketNo;
+        
     }
 
     @Override
     public int getID() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        return "Passenger\n" + "\nTicket No : " + ticketNo + super.toString();
+    }
+    
+    
+    
     
     
 }

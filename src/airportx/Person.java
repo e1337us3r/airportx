@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public abstract class Person {
+public abstract class Person implements PersonInterface{
     
     protected int id;         //6 digit
     private String name;   
@@ -19,7 +19,7 @@ public abstract class Person {
         this.from = from;
         this.bday = DataGen.randomBday();
     }
- public abstract int getID();
+ //public abstract int getID();
     
     public int getAge(){
         return Calendar.getInstance().get(Calendar.YEAR)-Integer.parseInt(bday.substring(6));
@@ -28,7 +28,7 @@ public abstract class Person {
     
     @Override
     public String toString() {
-        return "Person{" + "id=" + getID() + ", name=" + name + ", surname=" + surname + ", bday=" + bday + ", from=" + from + '}';
+        return "\n\nID : " + getID() + "\n\nName : " + name + "\n\nSurname : " + surname + "\n\nBirthday : " + bday + "\n\nFrom : " + from + "\n\n";
     }
     
 
@@ -50,7 +50,7 @@ public abstract class Person {
     
     public static int indexOf(ArrayList<Person> list,int id){
     
-    
+        System.out.println(list.size());
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).id==id) {
                 return i;

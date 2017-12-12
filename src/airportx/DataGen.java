@@ -19,6 +19,7 @@ public class DataGen {
     private static String[] statuses = {"Boarding", "Departed", "On Air", "Crashed","Arrived"};
     private static String[] names = {"Josephina", "Joanna", "Rome","Sallie" ,"Biddy" ,"Sauvage","Kaleigh", "Niles", "Wallis","Rosaleen", "Bret", "Whitaker","Malcom", "Zara", "Peyton","Ann", "Jaylen", "Saylor","Xzavier", "Kaleigh", "Ewart"};
     private static String[] countries = {"India","Barbados","Rwanda","Jersey","France","England","Turkey","USA","Canada","Findland","Italy","China","Japan","Senegal","Brasil","Mexico"};
+   // private static String[] jobs = {"Pilot","Flight Attendant","First Officer"};
     public static Flight randomFlight(ArrayList<Airport> airports, ArrayList<Flight> allFlights) {
         int flightId;
         boolean flag = false;
@@ -43,10 +44,23 @@ public class DataGen {
         int gate = r.nextInt(899) + 100;
         String status = statuses[r.nextInt(statuses.length)];
 
-        return new Flight(flightId, planeId, carrier, dest, source, depart, arriv, null, gate, status);
+        return new Flight(flightId, planeId, carrier, dest, source, depart, arriv, gate, status);
     }
 
-    public static Person randomPerson(ArrayList<Person> IDlist) {
+    public static Person randomPassenger(ArrayList<Person> IDlist) {
+        
+        int id = randomID(IDlist);         
+        String name = names[r.nextInt(names.length)];
+        String surname= names[r.nextInt(names.length)];
+        String bday = randomBday();    
+        String from = countries[r.nextInt(countries.length)];
+        String ticketNo = "" + (char) (r.nextInt(26) + 'A') +(r.nextInt(899999)+100000)+ (char) (r.nextInt(26) + 'A');
+        
+        return new Passenger(id, name, surname, from,ticketNo);
+
+    }
+    
+     public static PlaneCrew randomPlaneCrew(ArrayList<Person> IDlist) {
         
         int id = randomID(IDlist);         
         String name = names[r.nextInt(names.length)];
@@ -54,7 +68,7 @@ public class DataGen {
         String bday = randomBday();    
         String from = countries[r.nextInt(countries.length)];
         
-        return new Passenger(id, name, surname, from);
+        return new PlaneCrew(id, name, surname, from);
 
     }
 
@@ -84,8 +98,8 @@ public class DataGen {
 
         int id;
         do {
-            id = r.nextInt(899999999) + 100000000;
-        } while (Person.indexOf(IDlist, id) == -1);
+            id = r.nextInt(899999) + 100000;
+        } while (Person.indexOf(IDlist, id) != -1);
         return id;
     }
 

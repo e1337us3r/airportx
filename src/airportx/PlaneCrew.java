@@ -6,36 +6,37 @@ public class PlaneCrew extends Person{
 
     private String job; 
     
+    public PlaneCrew(int id, String name, String surname, String from) {
+        super(id, name, surname, from);
+    }
     public PlaneCrew(int id, String name, String surname, String from, String job) {
         super(id, name, surname, from);
         this.job = job;
     }
 
-    
-    public static void main(String[] args) {
-        
-        PlaneCrew test = new PlaneCrew(123456,"onur","sinansiker","kurdistan","whore");
-        System.out.println(test.getID());
-        
-        
-    }
-
-    /*@Override
+    @Override
     public int getID() {
         
         
         if(job.equalsIgnoreCase("pilot"))
             return id+999000000;
+        else if (job.equalsIgnoreCase("first officer"))
+            return id+888000000;
+        else if(job.equalsIgnoreCase("filight attendant"))
+            return id+777000000;
+        else return id;
         
-    }*/
-
-    @Override
-    public int getID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-   
+    public PlaneCrew setJob(String job) {
+        this.job = job;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Plane Crew\n"+"\nJob : "+this.job+super.toString();
+    }
     
     
     

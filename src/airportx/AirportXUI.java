@@ -4,6 +4,7 @@
   +Adding Airports
   +Edit Flights
   +Delete Flights
+  +fix the stupid gui not showing up somethimes bug
  */
 package airportx;
 
@@ -19,7 +20,6 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
@@ -27,10 +27,13 @@ public class AirportXUI extends javax.swing.JFrame {
 
     int selectedFlightId = 0;
 
+    
+    
     String currentAirport = "";
 
     public AirportXUI() {
-
+    this.setResizable(false);
+    //this.setLocation();
         SystemClass.addAirport(new Airport("IST"));
         SystemClass.addAirport(new Airport("DUB"));
         SystemClass.addAirport(new Airport("CDG"));
@@ -49,24 +52,39 @@ public class AirportXUI extends javax.swing.JFrame {
         }
         
        
-        
-        jTableIn.addMouseListener(new MouseAdapter(){
+        tableListeners();
+       
+    }
+    
+    void tableListeners(){
+    
+     jTableIn.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e) {
                // System.out.println(e.getClickCount());
                
                 if (e.getClickCount() == 2) {
                     System.out.println("Selected Flight id is "+selectedFlightId);
+                    (new FlightDetailsFrame(SystemClass.findFlight(selectedFlightId))).setVisible(true);
+                }
+            }
+    });
+        //check double click
+        jTableOut.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+               // System.out.println(e.getClickCount());
+               
+                if (e.getClickCount() == 2) {
+                    System.out.println("Selected Flight id is "+selectedFlightId);
+                    (new FlightDetailsFrame(SystemClass.findFlight(selectedFlightId))).setVisible(true);
                 }
             }
     });
         
         
         
-        
-        
          jTableIn.setRowSelectionAllowed(true);
-        //jTableIn.setCellSelectionEnabled(true);
         ListSelectionModel SelectionModel = jTableIn.getSelectionModel();
         SelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
@@ -75,11 +93,27 @@ public class AirportXUI extends javax.swing.JFrame {
             
              if(e.getValueIsAdjusting()){
             selectedFlightId = (Integer) jTableIn.getValueAt(jTableIn.getSelectedRow(), 0);
-            //System.out.println(jTableIn.getValueAt(jTableIn.getSelectedRow(), 0));
              }
            
             
         });
+        
+        jTableOut.setRowSelectionAllowed(true);
+        ListSelectionModel SelectionModel1 = jTableOut.getSelectionModel();
+        SelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        
+        SelectionModel1.addListSelectionListener((ListSelectionEvent e) -> {
+            
+             if(e.getValueIsAdjusting()){
+            selectedFlightId = (Integer) jTableOut.getValueAt(jTableOut.getSelectedRow(), 0);
+             }
+           
+            
+        });
+    
+    
+    
     }
 
     /**
@@ -560,7 +594,7 @@ public class AirportXUI extends javax.swing.JFrame {
 
                 SystemClass.addFlight(new Flight(Integer.parseInt(jTextA1.getText()),
                         jTextA2.getText(), jTextA3.getText(), jTextA4.getText(), jTextA5.getText(),
-                        jTextA6.getText(), jTextA7.getText(), null, Integer.parseInt(jTextA8.getText()), jTextA9.getText()));
+                        jTextA6.getText(), jTextA7.getText(), Integer.parseInt(jTextA8.getText()), jTextA9.getText()));
                 JOptionPane.showMessageDialog(null, "Flight Added", "AirportX", JOptionPane.INFORMATION_MESSAGE);
 
             }
@@ -672,7 +706,8 @@ public class AirportXUI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AirportXUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+PlaneCrew test = new PlaneCrew(123456,"onur","sinansiker","kurdistan","whore");
+        System.out.println(test.getID());
         /* Create and display the form */
         InputStream in;
         try {

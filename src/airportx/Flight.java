@@ -25,7 +25,7 @@ public class Flight implements Comparable<Flight>{
     private String status;
 
     public Flight() {
-        this(00000,"00-000","NONE","NONE","NONE","00:00","00:00", null ,000,"NONE");
+        this(00000,"00-000","NONE","NONE","NONE","00:00","00:00" ,000,"NONE");
     }
 
     public Flight(int flightId, String carrier, String dest, String source, String depart) {
@@ -34,9 +34,10 @@ public class Flight implements Comparable<Flight>{
         this.dest = dest;
         this.source = source;
         this.depart = depart;
+        getonBoard();
     }
 
-    public Flight(int flightId, String planeId, String carrier, String dest, String source, String depart, String arriv, ArrayList<Person> onBoard,int gate, String status) {
+    public Flight(int flightId, String planeId, String carrier, String dest, String source, String depart, String arriv,int gate, String status) {
         this.flightId = flightId;
         this.planeId = planeId;
         this.carrier = carrier;
@@ -44,9 +45,10 @@ public class Flight implements Comparable<Flight>{
         this.source = source;
         this.depart = depart;
         this.arriv = arriv;
-        this.onBoard = onBoard;
+       this.onBoard = getonBoard();
         this.gate = gate;
         this.status = status;
+        
     }
 
     public int getFlightId() {
@@ -106,5 +108,22 @@ public class Flight implements Comparable<Flight>{
         return this.flightId - o.flightId;
           
     }
+    
+    private ArrayList<Person> getonBoard(){
+        ArrayList<Person> temp = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+          //  System.out.println("i = "+i);
+            temp.add(DataGen.randomPassenger(temp));
+        }
+        
+        temp.add(DataGen.randomPlaneCrew(temp).setJob("Pilot"));
+        temp.add(DataGen.randomPlaneCrew(temp).setJob("First Officer"));
+        temp.add(DataGen.randomPlaneCrew(temp).setJob("Flight Attendant"));
+        temp.add(DataGen.randomPlaneCrew(temp).setJob("Flight Attendant"));
+        temp.add(DataGen.randomPlaneCrew(temp).setJob("Flight Attendant"));
+        return temp;
+        
+    }
+    
     
 }
