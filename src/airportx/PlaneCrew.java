@@ -22,7 +22,7 @@ public class PlaneCrew extends Person{
             return id+999000000;
         else if (job.equalsIgnoreCase("first officer"))
             return id+888000000;
-        else if(job.equalsIgnoreCase("filight attendant"))
+        else if(job.equalsIgnoreCase("flight attendant"))
             return id+777000000;
         else return id;
         

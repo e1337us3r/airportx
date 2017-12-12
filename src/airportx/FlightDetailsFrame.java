@@ -18,6 +18,7 @@ public class FlightDetailsFrame extends javax.swing.JFrame {
 
    Flight f;
    Random r = new Random();
+   int index=0;
     public FlightDetailsFrame(Flight f) {
         this.f = f;
         initComponents();
@@ -29,7 +30,8 @@ public class FlightDetailsFrame extends javax.swing.JFrame {
         
             @Override
             public void mouseClicked(MouseEvent e) {
-                jTextPane1.setText(f.getOnBoard().get(r.nextInt(25)).toString());
+                if(index>=25)index=0;
+                jTextPane1.setText(f.getOnBoard().get(index++).toString());
                 
             }
         });
