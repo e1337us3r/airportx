@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package airportx;
 
 
-public  class PlaneCrew extends Person{
+public class PlaneCrew extends Person{
 
     private String job; 
     
@@ -15,12 +11,31 @@ public  class PlaneCrew extends Person{
         this.job = job;
     }
 
+    
+    public static void main(String[] args) {
+        
+        PlaneCrew test = new PlaneCrew(123456,"onur","sinansiker","kurdistan","whore");
+        System.out.println(test.getID());
+        
+        
+    }
+
+    /*@Override
+    public int getID() {
+        
+        
+        if(job.equalsIgnoreCase("pilot"))
+            return id+999000000;
+        
+    }*/
+
     @Override
     public int getID() {
-        return this.id;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
+   
     
     
     

@@ -7,6 +7,8 @@
  */
 package airportx;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -15,43 +17,69 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-
-/**
- *
- * @author AVA
- */
 public class AirportXUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AirportXUI
-     */
-    ArrayList<Flight> allFlights = new ArrayList<Flight>();
-    ArrayList<Airport> allAirports = new ArrayList<Airport>();
+    int selectedFlightId = 0;
 
     String currentAirport = "";
 
     public AirportXUI() {
 
-        allAirports.add(new Airport("IST"));
-        allAirports.add(new Airport("DUB"));
-        allAirports.add(new Airport("CDG"));
-        allAirports.add(new Airport("DXB"));
-        allAirports.add(new Airport("JFK"));
-        allAirports.add(new Airport("YUL"));
+        SystemClass.addAirport(new Airport("IST"));
+        SystemClass.addAirport(new Airport("DUB"));
+        SystemClass.addAirport(new Airport("CDG"));
+        SystemClass.addAirport(new Airport("DXB"));
+        SystemClass.addAirport(new Airport("JFK"));
+        SystemClass.addAirport(new Airport("YUL"));
         for (int i = 0; i < 300; i++) {
-            System.out.println(i);
-            allFlights.add(DataGen.randomFlight(allAirports, allFlights));
+           // System.out.println(i);
+            SystemClass.addFlight(DataGen.randomFlight(SystemClass.getAllAirports(),SystemClass.getAllFlights()));
         }
+        
         initComponents();
-        //Collections.sort(allFlights);
-        for (int i = 0; i < allAirports.size(); i++) {
-            jComboBox1.addItem(allAirports.get(i).getCode());
+        Collections.sort(SystemClass.getAllFlights());
+        for (int i = 0; i < SystemClass.getAllAirports().size(); i++) {
+            jComboBox1.addItem(SystemClass.getAllAirports().get(i).getCode());
         }
-
-        System.out.println(DataGen.randomBday());
+        
+       
+        
+        jTableIn.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+               // System.out.println(e.getClickCount());
+               
+                if (e.getClickCount() == 2) {
+                    System.out.println("Selected Flight id is "+selectedFlightId);
+                }
+            }
+    });
+        
+        
+        
+        
+        
+         jTableIn.setRowSelectionAllowed(true);
+        //jTableIn.setCellSelectionEnabled(true);
+        ListSelectionModel SelectionModel = jTableIn.getSelectionModel();
+        SelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        
+        SelectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            
+             if(e.getValueIsAdjusting()){
+            selectedFlightId = (Integer) jTableIn.getValueAt(jTableIn.getSelectedRow(), 0);
+            //System.out.println(jTableIn.getValueAt(jTableIn.getSelectedRow(), 0));
+             }
+           
+            
+        });
     }
 
     /**
@@ -155,8 +183,7 @@ public class AirportXUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Incoming ", jPanel1);
@@ -212,8 +239,7 @@ public class AirportXUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Outgoing", jPanel2);
@@ -479,7 +505,7 @@ public class AirportXUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter flightID accordingly(ex./ '100000')", "AirportX", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (!(allFlights.stream().noneMatch((f) -> (f.getFlightId() == flightId)))) {
+        if (!(SystemClass.getAllFlights().stream().noneMatch((f) -> (f.getFlightId() == flightId)))) {
             System.out.println("id match");
             JOptionPane.showMessageDialog(null, "Matching flightID, please enter a unique ID.", "AirportX", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -532,7 +558,7 @@ public class AirportXUI extends javax.swing.JFrame {
             if (validateFlight(Integer.parseInt(jTextA1.getText()), jTextA2.getText(), jTextA3.getText(), jTextA4.getText(), jTextA5.getText(), jTextA6.getText(),
                     jTextA7.getText(), Integer.parseInt(jTextA8.getText()), jTextA9.getText())) {
 
-                allFlights.add(new Flight(Integer.parseInt(jTextA1.getText()),
+                SystemClass.addFlight(new Flight(Integer.parseInt(jTextA1.getText()),
                         jTextA2.getText(), jTextA3.getText(), jTextA4.getText(), jTextA5.getText(),
                         jTextA6.getText(), jTextA7.getText(), null, Integer.parseInt(jTextA8.getText()), jTextA9.getText()));
                 JOptionPane.showMessageDialog(null, "Flight Added", "AirportX", JOptionPane.INFORMATION_MESSAGE);
@@ -554,25 +580,25 @@ public class AirportXUI extends javax.swing.JFrame {
         
         //Creates a table model, fills it with current flight info depending on the selected airport and puts it on the gui
         
-        DefaultTableModel defaultModel = (DefaultTableModel) jTableIn.getModel();
-        DefaultTableModel defaultModel1 = (DefaultTableModel) jTableOut.getModel();
-        clearTable(defaultModel);
-        clearTable(defaultModel1);
+        DefaultTableModel incomingList = (DefaultTableModel) jTableIn.getModel();
+        DefaultTableModel outgoingList = (DefaultTableModel) jTableOut.getModel();
+        clearTable(incomingList);
+        clearTable(outgoingList);
 
-        currentAirport = allAirports.get(jComboBox1.getSelectedIndex()).getCode();
+        currentAirport = SystemClass.getAllAirports().get(jComboBox1.getSelectedIndex()).getCode();
         System.out.println(currentAirport);
 
         int index = 0;
-        for (Airport airport : allAirports) {
+        for (Airport airport : SystemClass.getAllAirports()) {
             if (Objects.equals(airport.getCode(), currentAirport)) {
-                index = allAirports.indexOf(airport);
+                index = SystemClass.getAllAirports().indexOf(airport);
                 break;
             }
         }
-        ArrayList<Flight> arrs = allAirports.get(index).incoming(allFlights);
+        ArrayList<Flight> arrs = SystemClass.getAllAirports().get(index).incoming(SystemClass.getAllFlights());
 
         for (Flight arr : arrs) {
-            if (arr.getFlightId() != 00000) {
+            
 
                 Vector newRow = new Vector();
 
@@ -587,14 +613,14 @@ public class AirportXUI extends javax.swing.JFrame {
                 newRow.add(arr.getGate());
                 newRow.add(arr.getStatus());
 
-                defaultModel.addRow(newRow);
-            }
+                incomingList.addRow(newRow);
+            
         }
 
-        ArrayList<Flight> arrs1 = allAirports.get(index).outgoing(allFlights);
+        arrs = SystemClass.getAllAirports().get(index).outgoing(SystemClass.getAllFlights());
 
-        for (Flight arr : arrs1) {
-            if (arr.getFlightId() != 00000) {
+        for (Flight arr : arrs) {
+            
 
                 Vector newRow = new Vector();
 
@@ -605,12 +631,12 @@ public class AirportXUI extends javax.swing.JFrame {
                 newRow.add(arr.getDest());
                 newRow.add(arr.getDepart());
                 newRow.add(arr.getArriv());
-                newRow.add("crew");
+                newRow.add("Click to View");
                 newRow.add(arr.getGate());
                 newRow.add(arr.getStatus());
 
-                defaultModel1.addRow(newRow);
-            }
+                outgoingList.addRow(newRow);
+            
         }
 
 

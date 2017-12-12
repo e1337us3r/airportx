@@ -6,13 +6,12 @@
 package airportx;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  *
  * @author AVA
  */
-public class Flight {
+public class Flight implements Comparable<Flight>{
     
     private int flightId;
     private String planeId;
@@ -100,6 +99,12 @@ public class Flight {
 
     public void setPlaneId(String planeId) {
         this.planeId = planeId;
+    }
+
+    @Override
+    public int compareTo(Flight o) {
+        return this.flightId - o.flightId;
+          
     }
     
 }

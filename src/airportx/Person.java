@@ -2,12 +2,11 @@ package airportx;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+
 
 public abstract class Person {
     
-    protected int id;         //10 digit
+    protected int id;         //6 digit
     private String name;   
     private String surname;
     private String bday;    //dd.mm.yyyy
@@ -20,8 +19,7 @@ public abstract class Person {
         this.from = from;
         this.bday = DataGen.randomBday();
     }
-
-    public abstract int getID();
+ public abstract int getID();
     
     public int getAge(){
         return Calendar.getInstance().get(Calendar.YEAR)-Integer.parseInt(bday.substring(6));

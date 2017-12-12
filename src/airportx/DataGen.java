@@ -16,7 +16,7 @@ import java.util.Random;
 public class DataGen {
 
     private static Random r = new Random();
-    private static String[] statuses = {"Boarding", "Left", "On Air", "Crashed"};
+    private static String[] statuses = {"Boarding", "Departed", "On Air", "Crashed","Arrived"};
     private static String[] names = {"Josephina", "Joanna", "Rome","Sallie" ,"Biddy" ,"Sauvage","Kaleigh", "Niles", "Wallis","Rosaleen", "Bret", "Whitaker","Malcom", "Zara", "Peyton","Ann", "Jaylen", "Saylor","Xzavier", "Kaleigh", "Ewart"};
     private static String[] countries = {"India","Barbados","Rwanda","Jersey","France","England","Turkey","USA","Canada","Findland","Italy","China","Japan","Senegal","Brasil","Mexico"};
     public static Flight randomFlight(ArrayList<Airport> airports, ArrayList<Flight> allFlights) {
