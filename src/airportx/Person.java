@@ -50,8 +50,7 @@ public abstract class Person implements PersonInterface{
     
     public static int indexOf(ArrayList<Person> list,int id){
     
-        System.out.println(list.size());
-        for (int i = 0; i < list.size(); i++) {
+                for (int i = 0; i < list.size(); i++) {
             if (list.get(i).id==id) {
                 return i;
             }

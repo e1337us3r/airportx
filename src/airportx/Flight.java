@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package airportx;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author AVA
- */
-public class Flight implements Comparable<Flight>{
-    
+public class Flight implements Comparable<Flight> {
+
     private int flightId;
     private String planeId;
     private String carrier;
@@ -25,7 +16,7 @@ public class Flight implements Comparable<Flight>{
     private String status;
 
     public Flight() {
-        this(00000,"00-000","NONE","NONE","NONE","00:00","00:00" ,000,"NONE");
+        this(00000, "00-000", "NONE", "NONE", "NONE", "00:00", "00:00", 000, "NONE");
     }
 
     public Flight(int flightId, String carrier, String dest, String source, String depart) {
@@ -34,10 +25,10 @@ public class Flight implements Comparable<Flight>{
         this.dest = dest;
         this.source = source;
         this.depart = depart;
-        getonBoard();
+        
     }
 
-    public Flight(int flightId, String planeId, String carrier, String dest, String source, String depart, String arriv,int gate, String status) {
+    public Flight(int flightId, String planeId, String carrier, String dest, String source, String depart, String arriv, int gate, String status) {
         this.flightId = flightId;
         this.planeId = planeId;
         this.carrier = carrier;
@@ -45,10 +36,14 @@ public class Flight implements Comparable<Flight>{
         this.source = source;
         this.depart = depart;
         this.arriv = arriv;
-       this.onBoard = getonBoard();
+        this.onBoard = fillonBoard();
         this.gate = gate;
         this.status = status;
-        
+
+    }
+
+    public ArrayList<Person> getOnBoard() {
+        return onBoard;
     }
 
     public int getFlightId() {
@@ -75,17 +70,13 @@ public class Flight implements Comparable<Flight>{
         return arriv;
     }
 
-    public ArrayList<Person> getOnBoard() {
-        return onBoard;
-    }
-
     public int getGate() {
         return gate;
-    }    
-    
-    public void setGate(int gate){
+    }
+
+    public void setGate(int gate) {
         this.gate = gate;
-    }    
+    }
 
     public String getStatus() {
         return status;
@@ -103,27 +94,55 @@ public class Flight implements Comparable<Flight>{
         this.planeId = planeId;
     }
 
-    @Override
-    public int compareTo(Flight o) {
-        return this.flightId - o.flightId;
-          
+    public void setFlightId(int flightId) {
+        this.flightId = flightId;
     }
-    
-    private ArrayList<Person> getonBoard(){
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
+    }
+
+    public void setDest(String dest) {
+        this.dest = dest;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setDepart(String depart) {
+        this.depart = depart;
+    }
+
+    public void setArriv(String arriv) {
+        this.arriv = arriv;
+    }
+
+    private ArrayList<Person> fillonBoard() {
         ArrayList<Person> temp = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-          //  System.out.println("i = "+i);
+            //  System.out.println("i = "+i);
             temp.add(DataGen.randomPassenger(temp));
         }
-        
+
         temp.add(DataGen.randomPlaneCrew(temp).setJob("Pilot"));
         temp.add(DataGen.randomPlaneCrew(temp).setJob("First Officer"));
         temp.add(DataGen.randomPlaneCrew(temp).setJob("Flight Attendant"));
         temp.add(DataGen.randomPlaneCrew(temp).setJob("Flight Attendant"));
         temp.add(DataGen.randomPlaneCrew(temp).setJob("Flight Attendant"));
         return temp;
-        
+
     }
-    
+
+    @Override
+    public int compareTo(Flight o) {
+        return this.flightId - o.flightId;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Flight Id : " + flightId + "\n\nPlane Id : " + planeId + "\n\nCarrier : " + carrier + "\n\nDestination : " + dest + "\n\nSource : " + source + "\n\nDeparture : " + depart + "\n\nArrival : " + arriv + "\n\nGate : " + gate + "\n\nStatus : " + status;
+    }
     
 }

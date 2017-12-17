@@ -1,3 +1,0 @@
-Hocam, yeni bir özellik ekledik, denemek için:
-1)Bir uçuþa tablodan çift týklayýn
-2)Açýlan framede herhangi bir koltuða týklayýn. 
